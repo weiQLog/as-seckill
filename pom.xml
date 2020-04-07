@@ -5,7 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.as.seckill</groupId>
     <artifactId>seckill-parent</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>provider-goods-8001</module>
+    </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
