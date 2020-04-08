@@ -1,0 +1,53 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.as.seckill.dao.GoodsMapper">
+    <insert id="insert" parameterType="com.as.seckill.Goods">
+        INSERT INTO
+            goods(id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock)
+        VALUES
+            (NULL, #{goodsName}, #{goodsTile}, #{goodsImg}, #{goodsDetail}, #{goodsPrice}, #{goodsStock});
+    </insert>
+    <insert id="insertWithList" parameterType="java.util.List">
+        INSERT INTO
+            goods(id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock)
+        VALUES
+        <foreach collection="goodsList" item="goods" separator=",">
+            (NULL, #{goods.goodsName}, #{goods.goodsTile}, #{goods.goodsImg}, #{goods.goodsDetail}, #{goods.goodsPrice}, #{goods.goodsStock}),
+        </foreach>
+    </insert>
+    <select id="selectByName" parameterType="java.lang.String" resultType="com.as.seckill.Goods">
+        SELECT
+            id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock
+        FROM
+            goods
+        WHERE
+            name like #{goodsName}
+    </select>
+    <update id="update">
+        UPDATE
+            goods
+        <set>
+            <if test="goodsName   != null">goods_name= #{goodsName},</if>
+            <if test="goodsTile   != null">goods_title=#{goodsTile},</if>
+            <if test="goodsImg    != null">goods_img=#{goodsImg},</if>
+            <if test="goodsDetail != null">goods_detail=#{goodsDetail},</if>
+            <if test="goodsPrice  != null">goods_price=#{goodsPrice},</if>
+            <if test="goodsStock  != null">goods_stock=#{goodsStock}</if>
+        </set>
+        WHERE
+            id = #{id}
+    </update>
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM goods WHERE id = #{id};
+    </delete>
+    <delete id="deleteByIdList" parameterType="java.util.List">
+        DELETE FROM
+            goods
+        WHERE id IN
+        <foreach item="id" collection="idList"
+                 open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
