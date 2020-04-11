@@ -47,22 +47,6 @@
         WHERE
             id = #{id}
     </update>
-    <update id="increaseStock">
-        UPDATE
-            goods
-        SET
-            goods_tock=goods_tock+#{number}
-        WHERE
-            id = #{id}
-    </update>
-    <update id="decreaseStock">
-        UPDATE
-            goods
-        SET
-            goods_tock=goods_tock-#{number}
-        WHERE
-            id = #{id}
-    </update>
     <delete id="deleteById" parameterType="java.lang.Long">
         DELETE FROM goods WHERE id = #{id};
     </delete>

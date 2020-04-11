@@ -10,6 +10,8 @@
     <modules>
         <module>provider-goods-8001</module>
         <module>api-commons</module>
+        <module>test-consumer</module>
+        <module>seckill</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -90,7 +92,7 @@
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}}</version>
+                <version>${hutool.version}</version>
             </dependency>
         </dependencies>
 

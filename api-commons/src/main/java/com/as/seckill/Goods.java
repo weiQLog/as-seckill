@@ -19,7 +19,7 @@ public class Goods implements Serializable {
     // 商品名称
     private String goodsName;
     // 商品标题
-    private String goodsTile;
+    private String goodsTitle;
     // 商品图片
     private String goodsImg;
     // 商品描述

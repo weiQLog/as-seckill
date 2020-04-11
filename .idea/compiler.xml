@@ -9,6 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="provider-goods-8001" />
         <module name="api-commons" />
+        <module name="test-consumer" />
+        <module name="seckill" />
       </profile>
     </annotationProcessing>
   </component>

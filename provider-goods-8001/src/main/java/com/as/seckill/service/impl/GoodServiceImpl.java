@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -26,23 +27,24 @@ public class GoodServiceImpl implements GoodsService {
     }
 
     /**
-     * 批量添加商品
-     *
-     * @param goodsList 商品列表
-     */
-    @Override
-    public void add(List<Goods> goodsList) {
-        goodsMapper.insertWithList(goodsList);
-    }
-
-    /**
      * 根据查询商品列表
      *
      * @param goodsName 商品名称
      */
     @Override
     public List<Goods> acquireByName(String goodsName) {
-        return goodsMapper.selectByName(goodsName);
+        return goodsMapper.selectByName("%" + goodsName + "%");
+    }
+
+    /**
+     * 根据商品id查询商品信息
+     *
+     * @param id 商品标识
+     * @return 返回商品信息
+     */
+    @Override
+    public Goods acquireById(Long id) {
+        return goodsMapper.selectById(id);
     }
 
     /**
@@ -51,22 +53,27 @@ public class GoodServiceImpl implements GoodsService {
      * @param goods 要修改的商品信息
      */
     @Override
-    public void modifyGoods(Goods goods) {
-        goodsMapper.update(goods);
+    public Integer modifyGoods(Goods goods) {
+        return goodsMapper.update(goods);
     }
 
     /**
-     * 修改某个商品的库存
-     *
+     * 增加商品的库存
      * @param id     商品库存
      * @param number 库存数
      */
     @Override
-    public void modifyGoodsStock(Long id, Integer number) {
-        goodsMapper.update(Goods.builder()
-                .id(id)
-                .goodsStock(number)
-                .build());
+    public void increaseGoodsStock(Long id, Integer number) {
+        goodsMapper.increaseStock(id, number);
+    }
+
+    /**
+     * 减少库存
+     * @param id 商品标识
+     */
+    @Override
+    public void decreaseGoodsStock(Long id, Integer number) {
+        goodsMapper.decreaseStock(id, number);
     }
 
     /**
@@ -76,11 +83,10 @@ public class GoodServiceImpl implements GoodsService {
      * @param goodsPrice 价格
      */
     @Override
-    public void modifyGoodsPrice(Long id, BigDecimal goodsPrice) {
-        goodsMapper.update(Goods.builder().
+    public Integer modifyGoodsPrice(Long id, BigDecimal goodsPrice) {
+        return goodsMapper.update(Goods.builder().
                 id(id).
-                goodsPrice(goodsPrice)
-                .build());
+                goodsPrice(goodsPrice).build());
     }
 
     /**
@@ -101,5 +107,15 @@ public class GoodServiceImpl implements GoodsService {
     @Override
     public void deleteByIdList(List<Long> idList) {
         goodsMapper.deleteByIdList(idList);
+    }
+
+    /**
+     * 批量删除商品
+     *
+     * @param idList 商品标识
+     */
+    @Override
+    public void deleteByIdArray(Long[] idList) {
+        goodsMapper.deleteByIdList(Arrays.asList(idList));
     }
 }
