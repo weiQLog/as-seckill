@@ -17,7 +17,6 @@ spring:
       transport:
         #配置Sentinel dashboard地址
         dashboard: 192.168.0.101:8080
-        # port:  8719  #默认8719不用配置
 management:
   endpoints:
     web:

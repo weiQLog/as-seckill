@@ -114,6 +114,7 @@ public class redisCacheServiceImpl implements RedisCacheService {
      */
     @Override
     public void addSeckilled(Seckilled seckilled) {
+        log.info("还可以");
         ZSetOperations<String, Object> zSetOperations = redisCacheTemple.opsForZSet();
         long creationTime = DateUtils.timestamp(seckilled.getSeckilledCreationTime());
         String key = "seckilledBlockingQueue";

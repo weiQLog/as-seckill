@@ -27,7 +27,7 @@ public class CacheController {
     /**
      * 将指定id的秒杀信息加入到缓存中
      */
-    @PostMapping("/SeckillCache")
+    @PostMapping("/seckillCache")
     public CommonResult<Seckill> addSeckillCache(@RequestParam Long id){
         CommonResult<Seckill> result = seckillService.acquireById(id);
         Seckill seckill = null;
@@ -42,8 +42,9 @@ public class CacheController {
      * 添加到延时队列 ,
      * @param seckilled 秒杀成功明细
      */
-    @PostMapping("/SeckilledCache")
+    @PostMapping("/seckilledCache")
     public CommonResult<Object> addSeckilled(Seckilled seckilled){
+        log.info("[{}]", seckilled);
         redisCacheService.addSeckilled(seckilled);  // 添加到队列
         return new SucceedCommonResult<>();
     }

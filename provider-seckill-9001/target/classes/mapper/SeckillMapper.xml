@@ -66,7 +66,7 @@
         INSERT INTO
             seckilled(seckill_id, user_phone, goods_id, seckilled_state, seckilled_creationtime, seckilled_price, seckilled_number)
         VALUES
-               (#{id}, #{userPhone}, #{goodsId}, #{seckilledState}, #{seckilledCreationTime}, #{seckilledPrice}, #{seckilledNumber})
+               (#{id}, #{userPhone}, #{goodsId}, #{seckilledState}, NULL, #{seckilledPrice}, #{seckilledNumber})
     </insert>
 
     <select id="selectSeckilledByPhone" resultMap="seckilledMap">
@@ -105,23 +105,23 @@
         <result column="seckilled_price" property="seckilledPrice"/>
         <result column="seckilled_number" property="seckilledNumber"/>
         <result column="goods_id" property="goodsId"/>
-        <association property="seckill" javaType="com.as.seckill.Seckill">
-            <id column="seckill_id" property="id"/>
-            <result column="goods_name" property="goodsName"/>
-            <result column="goods_id" property="goodsId"/>
-            <result column="seckill_stock" property="seckillStock"/>
-            <result column="seckill_starttime" property="seckillStartTime"/>
-            <result column="seckill_endtime" property="seckillEndTime"/>
-            <result column="seckill_creationtime" property="seckillCreationTime"/>
-        </association>
-        <association property="goods" javaType="com.as.seckill.Goods">
-            <id column="goods_id" property="id"/>
-            <result column="goods_title" property="goodsTitle"/>
-            <result column="goods_img" property="goodsImg"/>
-            <result column="goods_detail" property="goodsDetail"/>
-            <result column="goods_price" property="goodsPrice"/>
-            <result column="goods_stock" property="goodsStock"/>
-        </association>
+<!--        <association property="seckill" javaType="com.as.seckill.Seckill">-->
+<!--            <id column="seckill_id" property="id"/>-->
+<!--            <result column="goods_name" property="goodsName"/>-->
+<!--            <result column="goods_id" property="goodsId"/>-->
+<!--            <result column="seckill_stock" property="seckillStock"/>-->
+<!--            <result column="seckill_starttime" property="seckillStartTime"/>-->
+<!--            <result column="seckill_endtime" property="seckillEndTime"/>-->
+<!--            <result column="seckill_creationtime" property="seckillCreationTime"/>-->
+<!--        </association>-->
+<!--        <association property="goods" javaType="com.as.seckill.Goods">-->
+<!--            <id column="goods_id" property="id"/>-->
+<!--            <result column="goods_title" property="goodsTitle"/>-->
+<!--            <result column="goods_img" property="goodsImg"/>-->
+<!--            <result column="goods_detail" property="goodsDetail"/>-->
+<!--            <result column="goods_price" property="goodsPrice"/>-->
+<!--            <result column="goods_stock" property="goodsStock"/>-->
+<!--        </association>-->
     </resultMap>
     <resultMap id="seckillMap" type="com.as.seckill.Seckill">
         <id column="id" property="id"/>

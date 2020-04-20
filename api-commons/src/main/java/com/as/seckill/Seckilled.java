@@ -22,7 +22,4 @@ public class Seckilled {
     private String seckilledCreationTime;
     private BigDecimal seckilledPrice;
     private Integer seckilledNumber;
-    private Seckill seckill;
-    private Goods goods;
-
 }

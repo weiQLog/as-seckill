@@ -75,7 +75,8 @@ public class SeckillController {
             try {
                 seckillService.createSeckilled(seckilled);  // 如果这一步出错，反向补偿库存
                 Seckilled seckilledCache = seckillService.acquireSeckilledPrimaryKey(seckilled.getId(), seckilled.getUserPhone());
-                cacheService.addSeckilled(seckilledCache);// 添加到延时队列
+                log.info("[{}]", seckilledCache);
+                CommonResult<Object> a = cacheService.addSeckilled(seckilledCache);// 添加到延时队列
             } catch (Exception e) {
                 e.printStackTrace();
                 cacheService.increaseSeckillStock(seckillKey, seckilled.getSeckilledNumber());

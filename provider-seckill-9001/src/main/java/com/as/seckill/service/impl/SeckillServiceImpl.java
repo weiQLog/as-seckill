@@ -6,7 +6,6 @@ import com.as.seckill.dao.SeckillMapper;
 import com.as.seckill.service.GoodsService;
 import com.as.seckill.service.SeckillService;
 import io.seata.spring.annotation.GlobalTransactional;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,9 +13,6 @@ import java.util.List;
 
 @Service
 public class SeckillServiceImpl implements SeckillService {
-
-    @Resource
-    private RedisTemplate<String, Object> redisCacheTemple;
 
     @Resource
     private SeckillMapper seckillMapper;

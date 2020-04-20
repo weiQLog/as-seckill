@@ -1,5 +1,7 @@
 server:
   port: 9001
+  tomcat:
+    max-connections: 1000000
 
 spring:
   main:
@@ -19,10 +21,6 @@ spring:
     nacos:
       discovery:
         server-addr: 192.168.0.101:3333
-    sentinel:
-      transport:
-        #配置Sentinel dashboard地址
-        dashboard: 192.168.0.101:8080
   # 集群配置
   redis:
     cluster:
@@ -34,7 +32,7 @@ spring:
         - 192.168.0.101:7005
         - 192.168.0.101:7006
       max-redirects: 4
-    timeout: 10000 # 客户端超时时间
+    timeout: 30000 # 客户端超时时间
     lettuce:
       pool:
         max-idle: 50
