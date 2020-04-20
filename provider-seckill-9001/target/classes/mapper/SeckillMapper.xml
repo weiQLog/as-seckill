@@ -1,0 +1,148 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.as.seckill.dao.SeckillMapper">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.as.seckill.Seckill">
+        INSERT INTO
+            seckill(id, goods_id, goods_name, seckill_stock, seckill_starttime, seckill_endtime, seckill_creationtime, seckill_price, version)
+        VALUES
+            (NULL, #{goodsId}, #{goodsName}, #{seckillStock}, #{seckillStartTime}, #{seckillEndTime}, #{seckillCreationTime}, #{seckillPrice}, 0);
+    </insert>
+
+    <update id="update" >
+        UPDATE
+            seckill
+        <set>
+            <if test="goodsId             != null">goods_id= #{goodsId},</if>
+            <if test="goodsName           != null">goods_name=#{goodsName},</if>
+            <if test="seckillStock        != null">seckill_stock=#{seckillStock},</if>
+            <if test="seckillStartTime    != null">seckill_starttime=#{seckillStartTime},</if>
+            <if test="seckillEndTime      != null">seckill_endtime=#{seckillEndTime},</if>
+            <if test="seckillCreationTime != null">seckill_creationtime=#{seckillCreationTime}</if>
+            <if test="seckillPrice        != null">seckill_price=#{seckillPrice}</if>
+        </set>
+            ,version = version + 1
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="selectByStartTime" resultMap="seckillMap">
+        SELECT seckill.id as id, seckill.goods_id, seckill.goods_name, seckill_stock,seckill_starttime,
+               seckill_endtime, seckill_creationtime,seckill_price, goods_title, goods_img, goods_detail,
+               goods_price, goods_stock
+        FROM
+            seckill LEFT JOIN goods on (goods.id = seckill.goods_id)
+        WHERE
+            seckill_starttime <![CDATA[>]]> #{startTime1}
+                AND
+            <if test="startTime2 != null">
+                seckill_starttime <![CDATA[<]]> #{startTime2}
+            </if>
+    </select>
+
+    <select id="selectByEndTime" resultMap="seckillMap">
+        SELECT seckill.id as id, seckill.goods_id, seckill.goods_name, seckill_stock,seckill_starttime,
+            seckill_endtime, seckill_creationtime,seckill_price, goods_title, goods_img, goods_detail,
+            goods_price, goods_stock
+        FROM
+            seckill LEFT JOIN goods on (goods.id = seckill.goods_id)
+        WHERE
+            seckill_endtime <![CDATA[>]]> #{endTime1}
+        AND
+            <if test="startTime2 != null">
+                seckill_endtime <![CDATA[<]]> #{endTime2}
+            </if>
+    </select>
+
+    <select id="selectById" resultMap="seckillMap">
+        SELECT seckill.id as id, seckill.goods_id, seckill.goods_name, seckill_stock,seckill_starttime,
+               seckill_endtime, seckill_creationtime,seckill_price, goods_title, goods_img, goods_detail,
+               goods_price, goods_stock
+        FROM seckill LEFT JOIN goods on (goods.id = seckill.goods_id)
+        where seckill.id = 1008
+    </select>
+
+    <insert id="insertSeckilled">
+        INSERT INTO
+            seckilled(seckill_id, user_phone, goods_id, seckilled_state, seckilled_creationtime, seckilled_price, seckilled_number)
+        VALUES
+               (#{id}, #{userPhone}, #{goodsId}, #{seckilledState}, #{seckilledCreationTime}, #{seckilledPrice}, #{seckilledNumber})
+    </insert>
+
+    <select id="selectSeckilledByPhone" resultMap="seckilledMap">
+        select seckill_id,user_phone, seckilled_state, seckilled_creationtime, seckilled_price, seckilled_number, goods_id from seckilled where user_phone = #{userPhone}
+    </select>
+
+    <select id="selectSeckilledPrimaryKey" resultMap="seckilledMap">
+        select seckill_id,user_phone, seckilled_state, seckilled_creationtime, seckilled_price, seckilled_number, goods_id from seckilled where seckill_id = #{id} AND user_phone = #{userPhone}
+    </select>
+
+    <update id="updateState">
+        UPDATE seckilled SET seckilled_state = #{state} WHERE seckill_id = #{id} AND user_phone = #{userPhone}
+    </update>
+
+    <select id="selectSeckilledByPrimaryKey" resultMap="seckilledMap">
+        SELECT
+            seckill_id, user_phone, seckilled_state, seckilled_creationtime, seckilled_price, seckilled_number, seckilled.goods_id as goods_id,
+            seckill.goods_name as goods_name, seckill_stock, seckill_starttime, seckill_endtime, seckill_creationtime,
+            goods_title, goods_img, goods_detail, goods_price, goods_stock
+        FROM
+             seckilled LEFT JOIN seckill ON(seckill.id = seckilled.seckill_id)
+                      LEFT JOIN goods ON(goods.id = seckilled.goods_id)
+        WHERE seckill_id IN
+        <foreach item="id" collection="idList"
+                 open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND user_phone = #{userPhone}
+    </select>
+
+    <resultMap id="seckilledMap" type="com.as.seckill.Seckilled">
+        <result column="seckill_id" property="id"/>
+        <result column="user_phone" property="userPhone"/>
+        <result column="seckilled_state" property="seckilledState"/>
+        <result column="seckilled_creationtime" property="seckilledCreationTime"/>
+        <result column="seckilled_price" property="seckilledPrice"/>
+        <result column="seckilled_number" property="seckilledNumber"/>
+        <result column="goods_id" property="goodsId"/>
+        <association property="seckill" javaType="com.as.seckill.Seckill">
+            <id column="seckill_id" property="id"/>
+            <result column="goods_name" property="goodsName"/>
+            <result column="goods_id" property="goodsId"/>
+            <result column="seckill_stock" property="seckillStock"/>
+            <result column="seckill_starttime" property="seckillStartTime"/>
+            <result column="seckill_endtime" property="seckillEndTime"/>
+            <result column="seckill_creationtime" property="seckillCreationTime"/>
+        </association>
+        <association property="goods" javaType="com.as.seckill.Goods">
+            <id column="goods_id" property="id"/>
+            <result column="goods_title" property="goodsTitle"/>
+            <result column="goods_img" property="goodsImg"/>
+            <result column="goods_detail" property="goodsDetail"/>
+            <result column="goods_price" property="goodsPrice"/>
+            <result column="goods_stock" property="goodsStock"/>
+        </association>
+    </resultMap>
+    <resultMap id="seckillMap" type="com.as.seckill.Seckill">
+        <id column="id" property="id"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="seckill_stock" property="seckillStock"/>
+        <result column="seckill_starttime" property="seckillStartTime"/>
+        <result column="seckill_endtime" property="seckillEndTime"/>
+        <result column="seckill_creationtime" property="seckillCreationTime"/>
+        <result column="seckill_price" property="seckillPrice"/>
+        <result column="version" property="version"/>
+        <association property="goods" javaType="com.as.seckill.Goods">
+            <id column="goods_id" property="id"/>
+            <result property="id" column="goods_id"/>
+            <result property="goodsName" column="goods_name"/>
+            <result property="goodsTitle" column="goods_title"/>
+            <result property="goodsImg" column="goods_img"/>
+            <result property="goodsDetail" column="goods_detail"/>
+            <result property="goodsPrice" column="goods_price"/>
+            <result property="goodsStock" column="goods_stock"/>
+            <result property="version" column="version"/>
+        </association>
+    </resultMap>
+</mapper>
