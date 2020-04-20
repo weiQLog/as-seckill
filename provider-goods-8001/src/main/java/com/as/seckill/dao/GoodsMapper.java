@@ -46,7 +46,6 @@ public interface GoodsMapper {
      * 减少库存
      * @param id 减量
      * @param number 减量
-     * @return
      */
     void decreaseStock(@Param("id") Long id, @Param("number") Integer number);
 
@@ -61,4 +60,6 @@ public interface GoodsMapper {
      * @param idList id列表
      */
     void deleteByIdList(@Param("idList") List<Long> idList);
+
+    Integer getVersion(@Param("id") Long id);
 }

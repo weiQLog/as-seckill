@@ -1,0 +1,32 @@
+server:
+  port: 8081
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-request-size: 20MB
+      max-file-size: 16MB
+  application:
+    name: consumer-goods
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: my_tx_group
+    nacos:
+      discovery:
+        server-addr: 192.168.0.101:3333
+    sentinel:
+      transport:
+        #配置Sentinel dashboard地址
+        dashboard: 192.168.0.101:8080
+        # port:  8719  #默认8719不用配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+feign:
+  sentinel:
+    enabled: true
+# 对sentinel对feign的支持

@@ -1,6 +1,5 @@
 package com.as.seckill;
 
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +27,7 @@ public class Goods implements Serializable {
     private BigDecimal goodsPrice;
     // 商品库存
     private Integer goodsStock;
+    //版本号
+    private Integer version;
 
 }

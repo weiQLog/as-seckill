@@ -64,4 +64,7 @@ public interface GoodsService {
      * @param idList 商品标识
      */
     void deleteByIdArray(Long[] idList);
+
+    // 获取版本
+    Integer getVersion(Long id);
 }

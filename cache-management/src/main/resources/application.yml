@@ -1,0 +1,41 @@
+server:
+  port: 7001
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: cache-management
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.0.101:3333
+  # 集群配置
+  redis:
+    cluster:
+      nodes:
+        - 192.168.0.101:7001
+        - 192.168.0.101:7002
+        - 192.168.0.101:7003
+        - 192.168.0.101:7004
+        - 192.168.0.101:7005
+        - 192.168.0.101:7006
+      max-redirects: 4
+    timeout: 10000 # 客户端超时时间
+    lettuce:
+      pool:
+        max-idle: 50
+        min-idle: 5
+        max-wait: 5000
+        max-active: 600
+feign:
+  sentinel:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+redisCache:
+  loadRange: 43200000
+  paymentTimeliness: 600000

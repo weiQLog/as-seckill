@@ -10,19 +10,23 @@
     <modules>
         <module>provider-goods-8001</module>
         <module>api-commons</module>
-        <module>test-consumer</module>
-        <module>seckill</module>
+        <module>provider-seckill-9001</module>
+        <module>consumer-goods-8081</module>
+        <module>consumer-seckill-9081</module>
+        <module>cache-management</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <junit.version>4.9</junit.version>
+        <junit.version>4.12</junit.version>
         <log4j.version>1.2.17</log4j.version>
         <lombok.version>1.16.18</lombok.version>
         <hutool.version>5.2.5</hutool.version>
         <mysql.version>8.0.18</mysql.version>
         <druid.version>1.1.16</druid.version>
+        <fastjson.version>1.2.45</fastjson.version>
+        <commonsPool.version>2.6.2</commonsPool.version>
         <mybatis.spring.boot.version>1.3.0</mybatis.spring.boot.version>
     </properties>
     <dependencyManagement>
@@ -51,6 +55,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--fastjson-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
             <!-- mysql-->
             <dependency>
                 <groupId>mysql</groupId>
@@ -73,6 +83,11 @@
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commonsPool.version}</version>
             </dependency>
 
             <!--测试-->

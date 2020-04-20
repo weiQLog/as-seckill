@@ -10,16 +10,17 @@
         <result property="goodsDetail" column="goods_detail"/>
         <result property="goodsPrice" column="goods_price"/>
         <result property="goodsStock" column="goods_stock"/>
+        <result property="version" column="version"/>
     </resultMap>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.as.seckill.Goods">
         INSERT INTO
-            goods(id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock)
+            goods(id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock, version)
         VALUES
-            (NULL, #{goodsName}, #{goodsTitle}, #{goodsImg}, #{goodsDetail}, #{goodsPrice}, #{goodsStock});
+            (NULL, #{goodsName}, #{goodsTitle}, #{goodsImg}, #{goodsDetail}, #{goodsPrice}, #{goodsStock}, 0);
     </insert>
     <select id="selectByName" parameterType="java.lang.String" resultMap="GoodsMap">
         SELECT
-            id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock
+            id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock, version
         FROM
             goods
         WHERE
@@ -27,7 +28,7 @@
     </select>
     <select id="selectById" parameterType="java.lang.Long" resultMap="GoodsMap">
         SELECT
-            id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock
+            id, goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock, version
         FROM
             goods
         WHERE
@@ -44,6 +45,7 @@
             <if test="goodsPrice  != null">goods_price=#{goodsPrice},</if>
             <if test="goodsStock  != null">goods_stock=#{goodsStock}</if>
         </set>
+            ,version = version + 1
         WHERE
             id = #{id}
     </update>
@@ -51,7 +53,8 @@
         UPDATE
             goods
         SET
-            goods_tock=goods_tock+#{number}
+            goods_stock=goods_stock+#{number},
+            version = version + 1
         WHERE
             id = #{id}
     </update>
@@ -59,7 +62,8 @@
         UPDATE
             goods
         SET
-            goods_tock=goods_tock-#{number}
+            goods_stock=goods_stock-#{number},
+            version = version + 1
         WHERE
             id = #{id}
     </update>
@@ -75,4 +79,12 @@
             #{id}
         </foreach>
     </delete>
+    <select id="getVersion" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT
+            version
+        FROM
+            goods
+        WHERE
+            id = #{id}
+    </select>
 </mapper>

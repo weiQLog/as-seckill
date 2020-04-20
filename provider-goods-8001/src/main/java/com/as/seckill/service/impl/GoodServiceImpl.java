@@ -3,6 +3,7 @@ package com.as.seckill.service.impl;
 import com.as.seckill.Goods;
 import com.as.seckill.dao.GoodsMapper;
 import com.as.seckill.service.GoodsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
+@Slf4j
 public class GoodServiceImpl implements GoodsService {
 
     @Resource
@@ -23,6 +25,7 @@ public class GoodServiceImpl implements GoodsService {
      */
     @Override
     public void add(Goods goods) {
+        log.info("[{}]", goods.toString());
         goodsMapper.insert(goods);
     }
 
@@ -117,5 +120,15 @@ public class GoodServiceImpl implements GoodsService {
     @Override
     public void deleteByIdArray(Long[] idList) {
         goodsMapper.deleteByIdList(Arrays.asList(idList));
+    }
+
+    /**
+     * 获取版本
+     * @param id 商品id
+     * @return 版本号
+     */
+    @Override
+    public Integer getVersion(Long id) {
+        return goodsMapper.getVersion(id);
     }
 }

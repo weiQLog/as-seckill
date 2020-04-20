@@ -8,10 +8,19 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="provider-goods-8001" />
+        <module name="provider-seckill-9001" />
+        <module name="consumer-seckill-9081" />
+        <module name="consumer-goods-8081" />
+        <module name="cache-management" />
         <module name="api-commons" />
-        <module name="test-consumer" />
+        <module name="gateway-9527" />
         <module name="seckill" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="gateway-9527" target="1.8" />
+      <module name="seckill" target="1.8" />
+      <module name="test-consumer" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

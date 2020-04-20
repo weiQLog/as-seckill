@@ -1,0 +1,54 @@
+server:
+  port: 9001
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: provider-seckill
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/as_seckill?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: 123456
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: my_tx_group
+    nacos:
+      discovery:
+        server-addr: 192.168.0.101:3333
+    sentinel:
+      transport:
+        #配置Sentinel dashboard地址
+        dashboard: 192.168.0.101:8080
+  # 集群配置
+  redis:
+    cluster:
+      nodes:
+        - 192.168.0.101:7001
+        - 192.168.0.101:7002
+        - 192.168.0.101:7003
+        - 192.168.0.101:7004
+        - 192.168.0.101:7005
+        - 192.168.0.101:7006
+      max-redirects: 4
+    timeout: 10000 # 客户端超时时间
+    lettuce:
+      pool:
+        max-idle: 50
+        min-idle: 5
+        max-wait: 5000
+        max-active: 600
+mybatis:
+  # mapper
+  mapper-locations: classpath:mapper/*.xml
+feign:
+  sentinel:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
